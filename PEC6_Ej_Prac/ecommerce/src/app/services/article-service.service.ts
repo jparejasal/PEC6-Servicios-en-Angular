@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Article } from './../model/article';
-/* import { Observable } from 'rxjs';
-import { _throw as ObservableThrow} from 'rxjs/observable/throw';
+import { Observable } from 'rxjs-compat/Observable';
+import { _throw as ObservableThrow} from 'rxjs-compat/observable/throw';
 import { of as ObservableOf } from 'rxjs';
- */
 
 @Injectable({
   providedIn: 'root'
@@ -22,29 +21,24 @@ export class ArticleServiceService {
     ]
   }
 
-  getArticles(): Article[] {
-    return this.articles;
+  getArticles(): Observable<Article[]> {
+    return ObservableOf(this.articles);
   }
 
-  createArticle(article: Article) {
+  createArticle(article: Article): Observable<any> {
     let foundArticle = this.articles.find(each => each.id === article.id);
     if (foundArticle) {
-      /* return ObservableThrow({msg: 'Artículo con código ' + article.id + ' ya existe'}); */
-      return false;
+      return ObservableThrow({msg: 'Artículo con código ' + article.id + ' ya existe'});      
     }
     this.articles.push(article);
-    // return ObservableOf({msg: 'Artículo con código ' + article.id+ ' creado exitosamente'});;
-    return true;
+    return ObservableOf({msg: 'Artículo con código ' + article.id+ ' creado exitosamente'});    
   }
 
-  changeQuantity(articleID: number, chagenInQuantity: number) {
+  changeQuantity(articleID: number, chagenInQuantity: number): Observable<Article> {
     let foundArticle = this.articles.find(each => each.id === articleID);
     if (foundArticle) {
       foundArticle.quantityInCart = chagenInQuantity;
-      return true;
-    }
-    else {
-      return false;
+      return ObservableOf(foundArticle);      
     }
   }
 }

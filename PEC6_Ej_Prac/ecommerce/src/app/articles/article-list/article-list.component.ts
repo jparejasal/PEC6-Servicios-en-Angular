@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Article } from '../../model/article';
 import { ArticleServiceService } from '../../services/article-service.service';
+import { Observable } from 'rxjs-compat/Observable';
+import { of as ObservableOf } from 'rxjs';
 
 // Creación del componente article-list.
 @Component({
@@ -8,12 +10,12 @@ import { ArticleServiceService } from '../../services/article-service.service';
 
   // Template de línea.
   template: `
-    <div id="product" class="stock-container" [class]="article.isOnSale ? 'disponible' : 'noDisponible'" *ngFor="let article of articles; index as i">
+    <div id="product" class="stock-container" [class]="article.isOnSale ? 'disponible' : 'noDisponible'" *ngFor="let article of articles$ | async">
       <div>
           <img src={{article.imageUrl}} alt="car">
       </div>
       <div class="name"><h3>{{article.name}}</h3></div>
-      <div class="price">{{"$"+article.price}}</div>
+      <div class="price">{{article.price+"€"}}</div>
       <div class="amount" *ngIf="article.isOnSale">
         <button (click)="this.disminuirStock(article.id)" [disabled]="article.quantityInCart == 0">-</button>
             <span> {{article.quantityInCart}} </span>
@@ -63,32 +65,29 @@ export class ArticleListComponent implements OnInit {
 
   // Representa un array de tipo modelo article
   public articles: Array<Article>
+  public articles$: Observable<Article[]>
   
   constructor(private articleService: ArticleServiceService) { }
   
   // Inicialización de componente con datos a mostrar.
-  ngOnInit() {
-    this.articles = this.articleService.getArticles();  
-    /* this.articles = [
-      new Article(1, "Carro Azul", "./assets/img/bluecar.png", 50, true, 2),
-      new Article(2, "Black Citroen", "./assets/img/black-citroen-ds5.png", 50, true, 5),
-      new Article(3,"Alfa Romeo", "./assets/img/alfa-romeo.png", 50, false, 0)     
-    ]  */     
+  ngOnInit() {    
+    this.articles$ = this.articleService.getArticles();   
   } 
 
   // Método modificado para aumentar stock de un artículo específico.
   aumentarStock(articleId:number): void {
     for(let a of this.articles) {
-      if(a.id == articleId) {
+      if(a.id == articleId) {        
         a.quantityInCart++;
       }
-    }                                   
+    }                              
   }
 
   // Método modificado para decrementar stock de un artículo específico.
   disminuirStock(articleId:number): void {
     for(let a of this.articles) {
       if(a.id == articleId) {
+        this.articleService.changeQuantity(a.id, a.quantityInCart++);
         a.quantityInCart--;
       }
     }                                   

@@ -24,6 +24,14 @@
             <div *ngIf="articleReactiveForm.get('precio').errors.min">El precio mínimo debe se de 0.1€</div>           
         </div>
     </div>
+    <div>               
+        <input id="cantidad" type="text" placeholder="cantidad en inventario" formControlName="cantidad">
+        <div class="alert alert-danger" *ngIf="articleReactiveForm.get('cantidad').invalid && (articleReactiveForm.get('cantidad').dirty || articleReactiveForm.get('cantidad').touched || registrado)">           
+            <div *ngIf="articleReactiveForm.get('cantidad').errors.required">Cantidad en inventario requerida</div>
+            <div *ngIf="articleReactiveForm.get('cantidad').errors.pattern">Cantidad en inventario debe ser numérica</div>
+            <div *ngIf="articleReactiveForm.get('cantidad').errors.min">Cantidad en inventario debe se de mínimo 0</div>                       
+        </div>
+    </div>
     <div>        
         <input id="imagen" type="text" placeholder="URL de la imagen" formControlName="URLimagen">
         <div class="alert alert-danger" *ngIf="articleReactiveForm.get('URLimagen').invalid && (articleReactiveForm.get('URLimagen').dirty || articleReactiveForm.get('URLimagen').touched || registrado)">           
@@ -38,5 +46,3 @@
     <button type="submit">Registrar</button>
     <!-- <button type="submit" [disabled]="!articleReactiveForm.valid">Submit</button> -->
 </form>
-
-<h4>El artículo es {{article | json}}</h4>
