@@ -21,7 +21,8 @@ export class ArticleNewReactiveComponent {
     nombre: ['', [Validators.required, misValidaciones.NameArticleValidator]],
     precio: ['', [Validators.required, Validators.pattern('[0-9]+([\.,][0-9]+)?'), Validators.min(0.1)]],
     cantidad: ['', [Validators.required, Validators.pattern('[0-9]+([\.,][0-9]+)?'), Validators.min(0)]],
-    URLimagen: ['', [Validators.required, Validators.pattern('https?://.+')]],
+    //URLimagen: ['', [Validators.required, Validators.pattern('https?://.+')]],
+    URLimagen: ['', [Validators.pattern('https?://.+')]],
     venta: [''],   
   });
   registrado = false;

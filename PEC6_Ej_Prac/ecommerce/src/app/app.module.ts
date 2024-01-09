@@ -11,6 +11,7 @@ import { ArticleListComponent } from './articles/article-list/article-list.compo
 import { NavbarComponent } from './navbar/navbar.component';
 import { ArticleNewTemplateComponent } from './articles/article-new-template/article-new-template.component';
 import { ArticleNewReactiveComponent } from './articles/article-new-reactive/article-new-reactive.component';
+import { imagenURLPipe } from './articles/imagenURL.pipe';
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import { ArticleNewReactiveComponent } from './articles/article-new-reactive/art
     ArticleListComponent,
     NavbarComponent,
     ArticleNewTemplateComponent,
-    ArticleNewReactiveComponent    
+    ArticleNewReactiveComponent,
+    imagenURLPipe    
   ],
   imports: [
     BrowserModule,

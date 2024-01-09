@@ -32,12 +32,18 @@
             <div *ngIf="articleReactiveForm.get('cantidad').errors.min">Cantidad en inventario debe se de mínimo 0</div>                       
         </div>
     </div>
-    <div>        
+    <!-- <div>        
         <input id="imagen" type="text" placeholder="URL de la imagen" formControlName="URLimagen">
         <div class="alert alert-danger" *ngIf="articleReactiveForm.get('URLimagen').invalid && (articleReactiveForm.get('URLimagen').dirty || articleReactiveForm.get('URLimagen').touched || registrado)">           
             <div *ngIf="articleReactiveForm.get('URLimagen').errors.required">URL de imagen requerida</div>
             <div *ngIf="articleReactiveForm.get('URLimagen').errors.pattern">URL incorrecta</div>           
         </div>
+    </div> -->
+    <div>        
+        <input id="imagen" type="text" placeholder="URL de la imagen" formControlName="URLimagen">
+        <div class="alert alert-danger" *ngIf="articleReactiveForm.get('URLimagen').invalid && (articleReactiveForm.get('URLimagen').dirty || articleReactiveForm.get('URLimagen').touched || registrado)">
+            <div *ngIf="articleReactiveForm.get('URLimagen').errors.pattern">URL incorrecta</div>           
+        </div>        
     </div>
     <div>
         <label for="venta">Está a la venta? </label>

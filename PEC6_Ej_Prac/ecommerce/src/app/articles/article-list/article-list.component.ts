@@ -2,20 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { Article } from '../../model/article';
 import { ArticleServiceService } from '../../services/article-service.service';
 import { Observable } from 'rxjs-compat/Observable';
-import { of as ObservableOf } from 'rxjs';
 
 // Creación del componente article-list.
-@Component({
+@Component({  
   selector: 'app-article-list',
 
   // Template de línea.
   template: `
     <div id="product" class="stock-container" [class]="article.isOnSale ? 'disponible' : 'noDisponible'" *ngFor="let article of articles$ | async">
       <div>
-          <img src={{article.imageUrl}} alt="car">
+          <img [src]="article.imageUrl | imagenURL" alt="car">
       </div>
       <div class="name"><h3>{{article.name}}</h3></div>
-      <div class="price">{{article.price+"€"}}</div>
+      <div class="price">{{article.price | currency:'EUR'}}</div>
       <div class="amount" *ngIf="article.isOnSale">
         <button (click)="this.disminuirStock(article.id)" [disabled]="article.quantityInCart == 0">-</button>
             <span> {{article.quantityInCart}} </span>
@@ -81,7 +80,7 @@ export class ArticleListComponent implements OnInit {
         a.quantityInCart++;
       }
     }                              
-  }
+  }  
 
   // Método modificado para decrementar stock de un artículo específico.
   disminuirStock(articleId:number): void {
